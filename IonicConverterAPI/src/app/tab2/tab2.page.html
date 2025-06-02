@@ -5,12 +5,32 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+ 
+  <div *ngIf="isLoading" class="loading-state">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Carregando histórico...</p>
+  </div>
+
+ 
+  <ion-item *ngIf="errorMessage" color="danger">
+    <ion-icon slot="start" name="warning"></ion-icon>
+    <ion-label>{{ errorMessage }}</ion-label>
+  </ion-item>
+
+
+  <ion-list *ngIf="!isLoading && history.length > 0">
     <ion-item *ngFor="let item of history">
       <ion-label>
-        <h2>{{item.amount}} {{item.from}} → {{item.result | number:'1.2-2'}} {{item.to}}</h2>
-        <p>{{item.date | date:'medium'}}</p>
+        <h2>{{ item.amount }} {{ item.from }} → {{ item.result | number:'1.2-2' }} {{ item.to }}</h2>
+        <p>Taxa: 1 {{ item.from }} = {{ (item.result/item.amount) | number:'1.4-4' }} {{ item.to }}</p>
+        <p>{{ formatDate(item.date) }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
+
+
+  <div *ngIf="!isLoading && history.length === 0 && !errorMessage" class="empty-state">
+    <ion-icon name="time-outline"></ion-icon>
+    <p>Nenhuma conversão registrada</p>
+  </div>
 </ion-content>

@@ -22,14 +22,15 @@ export class Tab1Page {
   }
 
   async convert() {
-    if (!this.rates[this.toCurrency]) await this.loadRates();
-    this.convertedAmount = this.amount * this.rates[this.toCurrency];
-    this.currencyService.saveConversion({
-      from: this.fromCurrency,
-      to: this.toCurrency,
-      amount: this.amount,
-      result: this.convertedAmount,
-      date: new Date()
-    });
+  try {
+    const result = await this.currencyService.convert(
+      this.amount,
+      this.fromCurrency,
+      this.toCurrency
+    );
+    this.convertedAmount = result;
+  } catch (error) {
+    console.error(error);
   }
+}
 }

@@ -5,7 +5,8 @@ import { CurrencyService } from '../services/currency.service';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  styleUrls: ['tab3.page.scss'],
+  standalone:false
 })
 export class Tab3Page implements OnInit {
   @ViewChild('rateChart', { static: true }) rateChartRef: any;
